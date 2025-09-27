@@ -35,3 +35,12 @@ logging:
       springframework:
         web: debug
         security: trace
+
+# production
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+  jpa:
+    show-sql: false
