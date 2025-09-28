@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.github.sugayamidori.viaseguraapi.controller.dto.TokenDTO;
-import io.micrometer.core.instrument.config.validate.Validated;
+import com.github.sugayamidori.viaseguraapi.exceptions.InvalidJwtAuthenticationException;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -87,10 +87,18 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if(StringUtils.isAllEmpty(bearerToken) && bearerToken.startsWith("Bearer ")) {
-
+            return bearerToken.substring("Bearer ".length());
         } else {
-            System.out.println("hv");
+            throw new InvalidJwtAuthenticationException("Invalid JWT Token");
         }
-        return "";
+    }
+
+    public boolean validateToken(String token) {
+        DecodedJWT decodedJWT = decodeToken(token);
+        try {
+            return !decodedJWT.getExpiresAt().before(new Date());
+        } catch (Exception e) {
+            throw new InvalidJwtAuthenticationException("Expire or invalid JWT Token");
+        }
     }
 }
