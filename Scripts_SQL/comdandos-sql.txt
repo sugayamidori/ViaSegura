@@ -1,7 +1,8 @@
 create table usuario(
     id uuid not null primary key,
-    email varchar(150) not null,
+    nome varchar(20) not null,
     senha varchar(300) not null,
+	email varchar(150) not null unique,
     roles varchar[]
 );
 
@@ -12,5 +13,3 @@ CREATE TABLE client(
    redirect_uri varchar(200) not null,
    scope varchar(50)
 );
-
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
