@@ -15,8 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -56,17 +54,6 @@ public class SecurityConfiguration {
     @Bean
     public GrantedAuthorityDefaults grantedAuthorityDefaults(){
         return new GrantedAuthorityDefaults("");
-    }
-
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter(){
-        var authoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        authoritiesConverter.setAuthorityPrefix("");
-
-        var converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
-
-        return converter;
     }
 
     @Bean
