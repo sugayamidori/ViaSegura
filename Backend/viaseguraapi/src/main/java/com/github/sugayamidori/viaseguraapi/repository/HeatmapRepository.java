@@ -1,6 +1,5 @@
 package com.github.sugayamidori.viaseguraapi.repository;
 
-import com.github.sugayamidori.viaseguraapi.model.H3Coordinates;
 import com.github.sugayamidori.viaseguraapi.model.Heatmap;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
