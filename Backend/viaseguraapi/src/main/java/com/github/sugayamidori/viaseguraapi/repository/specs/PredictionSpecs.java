@@ -4,7 +4,6 @@ import com.github.sugayamidori.viaseguraapi.model.Prediction;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class PredictionSpecs {
 

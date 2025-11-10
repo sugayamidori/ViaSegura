@@ -1,0 +1,5 @@
+# Instala dependências
+docker exec data-loader pip install -r requirements.txt
+
+# Executa carga
+docker exec -it data-loader python load_data.py

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import static com.github.sugayamidori.viaseguraapi.repository.specs.PredictionSpecs.*;
 

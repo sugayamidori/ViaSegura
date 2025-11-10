@@ -1,6 +1,5 @@
 package com.github.sugayamidori.viaseguraapi.controller.docs;
 
-import com.github.sugayamidori.viaseguraapi.controller.dto.H3CoordinatesDTO;
 import com.github.sugayamidori.viaseguraapi.controller.dto.HeatmapDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
