@@ -10,5 +10,5 @@ CREATE TABLE heatmap (
     UNIQUE(h3_cell, year, month)
 );
 
-CREATE INDEX idx_accidents_cell ON heatmap(h3_cell);
-CREATE INDEX idx_accidents_date ON heatmap(year, month);
+CREATE INDEX idx_heatmap_cell ON heatmap(h3_cell);
+CREATE INDEX idx_heatmap_date ON heatmap(year, month);
