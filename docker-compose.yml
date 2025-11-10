@@ -18,7 +18,8 @@ services:
       - SPRING_PROFILES_ACTIVE=default
       - TZ=America/Sao_Paulo
     depends_on:
-      - viaseguradb
+      viaseguradb:
+        condition: service_healthy
     networks:
       - viasegura-network
 
@@ -34,8 +35,14 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./scripts/data:/data
     networks:
       - viasegura-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   pgadmin4:
     image: dpage/pgadmin4:8.9
@@ -49,6 +56,19 @@ services:
       - viaseguradb
     networks:
       - viasegura-network
+
+  data-loader:
+    image: python:3.11-slim
+    container_name: data-loader
+    working_dir: /app
+    volumes:
+      - ./scripts:/app
+    networks:
+      - viasegura-network
+    command: tail -f /dev/null  # Mantém container rodando
+    depends_on:
+      viaseguradb:
+        condition: service_healthy
 
 volumes:
   postgres_data:
