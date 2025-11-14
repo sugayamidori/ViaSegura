@@ -36,10 +36,10 @@ public interface H3CoordinatesControllerDocs {
                                                   BigDecimal latitude,
                                                   @RequestParam(value = "longitude", required = false)
                                                   BigDecimal longitude,
-                                                  @RequestParam(value = "bairro", required = false)
-                                                  String bairro,
-                                                  @RequestParam(value = "pagina", defaultValue = "0")
-                                                  Integer pagina,
-                                                  @RequestParam(value = "tamanhoPagina", defaultValue = "20")
-                                                  Integer tamanhoPagina);
+                                                  @RequestParam(value = "neighborhood", required = false)
+                                                  String neighborhood,
+                                                  @RequestParam(value = "page", defaultValue = "0")
+                                                  Integer page,
+                                                  @RequestParam(value = "pageSize", defaultValue = "20")
+                                                  Integer pageSize);
 }

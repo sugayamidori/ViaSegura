@@ -34,17 +34,17 @@ public class PredictionController implements PredictionControllerDocs {
             String weekStart,
             @RequestParam(value = "predictedAccidents", required = false)
             BigDecimal predictedAccidents,
-            @RequestParam(value = "pagina", defaultValue = "0")
-            Integer pagina,
-            @RequestParam(value = "tamanhoPagina", defaultValue = "20")
-            Integer tamanhoPagina
+            @RequestParam(value = "page", defaultValue = "0")
+            Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "20")
+            Integer pageSize
 
     ) {
-        Page<Prediction> paginaResultado = service.search(h3Cell, weekStart, predictedAccidents, pagina, tamanhoPagina);
+        Page<Prediction> resultPage = service.search(h3Cell, weekStart, predictedAccidents, page, pageSize);
 
-        Page<PredictionDTO> resultado = paginaResultado.map(mapper::toDTO);
+        Page<PredictionDTO> result = resultPage.map(mapper::toDTO);
 
-        return ResponseEntity.ok(resultado);
+        return ResponseEntity.ok(result);
     }
 
 }

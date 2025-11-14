@@ -19,7 +19,7 @@ public class HeatmapSpecs {
         return (root, query, cb) -> cb.equal(root.get("month"), month);
     }
 
-    public static Specification<Heatmap> numSinistrosEquals(BigDecimal numSinistros) {
-        return (root, query, cb) -> cb.equal(root.get("numSinistros"), numSinistros);
+    public static Specification<Heatmap> numCasualtiesEquals(BigDecimal numCasualties) {
+        return (root, query, cb) -> cb.equal(root.get("numCasualties"), numCasualties);
     }
 }

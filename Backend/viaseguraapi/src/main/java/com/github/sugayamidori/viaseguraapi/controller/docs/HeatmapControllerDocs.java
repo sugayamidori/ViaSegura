@@ -37,12 +37,12 @@ public interface HeatmapControllerDocs {
             Integer year,
             @RequestParam(value = "month", required = false)
             Integer month,
-            @RequestParam(value = "numSinistros", required = false)
-            BigDecimal numSinistros,
-            @RequestParam(value = "pagina", defaultValue = "0")
-            Integer pagina,
-            @RequestParam(value = "tamanhoPagina", defaultValue = "20")
-            Integer tamanhoPagina
+            @RequestParam(value = "numCasualties", required = false)
+            BigDecimal numCasualties,
+            @RequestParam(value = "page", defaultValue = "0")
+            Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "20")
+            Integer pageSize
 
     );
 }

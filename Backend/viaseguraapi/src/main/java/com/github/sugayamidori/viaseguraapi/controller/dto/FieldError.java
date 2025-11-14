@@ -1,4 +1,4 @@
 package com.github.sugayamidori.viaseguraapi.controller.dto;
 
-public record ErroCampo(String campo, String erro) {
+public record FieldError(String field, String error) {
 }

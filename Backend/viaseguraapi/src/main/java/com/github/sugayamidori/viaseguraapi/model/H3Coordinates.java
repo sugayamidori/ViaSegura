@@ -31,7 +31,7 @@ public class H3Coordinates implements Serializable {
     private BigDecimal longitude;
 
     @Column(name = "bairro_clean", length = 100)
-    private String bairro;
+    private String neighborhood;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

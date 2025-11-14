@@ -24,8 +24,8 @@ public class PredictionService {
             String h3Cell,
             String weekStart,
             BigDecimal predictedAccidents,
-            Integer pagina,
-            Integer tamanhoPagina
+            Integer page,
+            Integer pageSize
     ) {
 
         Specification<Prediction> specs = (root, query, cb) -> cb.conjunction();
@@ -42,7 +42,7 @@ public class PredictionService {
             specs.and(predictedAccidentsEquals(predictedAccidents));
         }
 
-        Pageable pageRequest = PageRequest.of(pagina, tamanhoPagina);
+        Pageable pageRequest = PageRequest.of(page, pageSize);
 
         return repository.findAll(specs, pageRequest);
     }

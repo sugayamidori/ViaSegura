@@ -34,19 +34,19 @@ public class H3CoordinatesController implements H3CoordinatesControllerDocs {
             BigDecimal latitude,
             @RequestParam(value = "longitude", required = false)
             BigDecimal longitude,
-            @RequestParam(value = "bairro", required = false)
-            String bairro,
-            @RequestParam(value = "pagina", defaultValue = "0")
-            Integer pagina,
-            @RequestParam(value = "tamanhoPagina", defaultValue = "20")
-            Integer tamanhoPagina
+            @RequestParam(value = "neighborhood", required = false)
+            String neighborhood,
+            @RequestParam(value = "page", defaultValue = "0")
+            Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "20")
+            Integer pageSize
 
     ) {
-        Page<H3Coordinates> paginaResultado = service.search(h3Cell, latitude, longitude, bairro, pagina, tamanhoPagina);
+        Page<H3Coordinates> resultPage = service.search(h3Cell, latitude, longitude, neighborhood, page, pageSize);
 
-        Page<H3CoordinatesDTO> resultado = paginaResultado.map(mapper::toDTO);
+        Page<H3CoordinatesDTO> result = resultPage.map(mapper::toDTO);
 
-        return ResponseEntity.ok(resultado);
+        return ResponseEntity.ok(result);
     }
 
 }

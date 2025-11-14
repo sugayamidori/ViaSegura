@@ -23,9 +23,9 @@ public class H3CoordinatesService {
             String h3Cell,
             BigDecimal latitude,
             BigDecimal longitude,
-            String bairro,
-            Integer pagina,
-            Integer tamanhoPagina
+            String neighborhood,
+            Integer page,
+            Integer pageSize
     ) {
 
         Specification<H3Coordinates> specs = (root, query, cb) -> cb.conjunction();
@@ -42,11 +42,11 @@ public class H3CoordinatesService {
             specs = specs.and(longitudeEquals(longitude));
         }
 
-        if(bairro != null) {
-            specs = specs.and(bairroLike(bairro));
+        if(neighborhood != null) {
+            specs = specs.and(neighborhoodLike(neighborhood));
         }
 
-        Pageable pageRequest = PageRequest.of(pagina, tamanhoPagina);
+        Pageable pageRequest = PageRequest.of(page, pageSize);
 
         return repository.findAll(specs, pageRequest);
     }

@@ -23,9 +23,9 @@ public class HeatmapService {
             String h3Cell,
             Integer year,
             Integer month,
-            BigDecimal numSinistros,
-            Integer pagina,
-            Integer tamanhoPagina
+            BigDecimal numCasualties,
+            Integer page,
+            Integer pageSize
     ) {
 
         Specification<Heatmap> specs = (root, query, cb) -> cb.conjunction();
@@ -42,11 +42,11 @@ public class HeatmapService {
             specs.and(monthEquals(month));
         }
 
-        if(numSinistros != null) {
-            specs = specs.and(numSinistrosEquals(numSinistros));
+        if(numCasualties != null) {
+            specs = specs.and(numCasualtiesEquals(numCasualties));
         }
 
-        Pageable pageRequest = PageRequest.of(pagina, tamanhoPagina);
+        Pageable pageRequest = PageRequest.of(page, pageSize);
 
         return repository.findAll(specs, pageRequest);
     }

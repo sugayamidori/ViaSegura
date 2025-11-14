@@ -1,8 +1,8 @@
 package com.github.sugayamidori.viaseguraapi.validator;
 
-import com.github.sugayamidori.viaseguraapi.exceptions.RegistroDuplicadoException;
-import com.github.sugayamidori.viaseguraapi.model.Usuario;
-import com.github.sugayamidori.viaseguraapi.repository.UsuarioRepository;
+import com.github.sugayamidori.viaseguraapi.exceptions.DuplicatedRegistryException;
+import com.github.sugayamidori.viaseguraapi.model.User;
+import com.github.sugayamidori.viaseguraapi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,38 +17,38 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UsuarioValidatorTest {
+class UserValidatorTest {
 
     @Mock
-    private UsuarioRepository repository;
+    private UserRepository repository;
 
     @InjectMocks
-    private UsuarioValidator validator;
+    private UserValidator validator;
 
-    private Usuario usuario;
+    private User user;
 
     @BeforeEach
     void setUp() {
-        usuario = new Usuario();
-        usuario.setEmail("usuario@exemplo.com");
+        user = new User();
+        user.setEmail("user@exemplo.com");
     }
 
     @Test
-    void deveValidarComSucesso() {
+    void shouldValidateSuccessfully() {
         when(repository.findByEmail(anyString())).thenReturn(null);
 
-        validator.validar(usuario);
+        validator.validate(user);
 
         verify(repository).findByEmail(anyString());
-        assertDoesNotThrow(() -> validator.validar(usuario));
+        assertDoesNotThrow(() -> validator.validate(user));
 
     }
 
     @Test
-    void deveLancarExcecaoUsuarioJaCadastrado() {
-        when(repository.findByEmail(anyString())).thenReturn(usuario);
+    void shouldThrowException() {
+        when(repository.findByEmail(anyString())).thenReturn(user);
 
-        assertThrows(RegistroDuplicadoException.class, () -> validator.validar(usuario));
+        assertThrows(DuplicatedRegistryException.class, () -> validator.validate(user));
 
         verify(repository).findByEmail(anyString());
 

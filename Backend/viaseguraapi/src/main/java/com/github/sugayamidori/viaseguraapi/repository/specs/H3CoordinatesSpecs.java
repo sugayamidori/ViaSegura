@@ -14,12 +14,13 @@ public class H3CoordinatesSpecs {
     public static Specification<H3Coordinates> latitudeEquals(BigDecimal latitude) {
         return (root, query, cb) -> cb.equal(root.get("latitude"), latitude);
     }
+
     public static Specification<H3Coordinates> longitudeEquals(BigDecimal longitude) {
         return (root, query, cb) -> cb.equal(root.get("longitude"), longitude);
     }
 
-    public static Specification<H3Coordinates> bairroLike(String bairro) {
+    public static Specification<H3Coordinates> neighborhoodLike(String neighborhoodLike) {
         return (root, query, cb) ->
-                cb.like( cb.upper(root.get("bairro")), "%" + bairro.toUpperCase() + "%");
+                cb.like( cb.upper(root.get("neighborhood")), "%" + neighborhoodLike.toUpperCase() + "%");
     }
 }

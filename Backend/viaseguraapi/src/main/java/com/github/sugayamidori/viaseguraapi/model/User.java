@@ -9,22 +9,22 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table
+@Table(name = "users")
 @Data
-public class Usuario {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column
-    private String nome;
+    private String name;
 
     @Column
     private String email;
 
     @Column
-    private String senha;
+    private String password;
 
     @Type(ListArrayType.class)
     @Column(name = "roles", columnDefinition = "varchar[]")

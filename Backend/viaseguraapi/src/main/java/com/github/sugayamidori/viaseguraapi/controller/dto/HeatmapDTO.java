@@ -7,7 +7,7 @@ public record HeatmapDTO(
         String h3Cell,
         Integer year,
         Integer month,
-        BigDecimal numSinistros,
+        BigDecimal numCasualties,
         LocalDateTime createdAt
 ) {
 }

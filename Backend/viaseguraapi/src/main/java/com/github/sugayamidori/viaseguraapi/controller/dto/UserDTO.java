@@ -6,13 +6,13 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
-public record UsuarioDTO(
-        @NotBlank(message = "Campo obrigatório")
-        String nome,
-        @Email(message = "Insira um email válido")
-        @NotBlank(message = "Campo obrigatório")
+public record UserDTO(
+        @NotBlank(message = "Required field")
+        String name,
+        @Email(message = "Invalid email format")
+        @NotBlank(message = "Required field")
         String email,
-        @NotEmpty(message = "Campo obrigatório")
+        @NotEmpty(message = "Required field")
         List<String> roles
 ) {
 }

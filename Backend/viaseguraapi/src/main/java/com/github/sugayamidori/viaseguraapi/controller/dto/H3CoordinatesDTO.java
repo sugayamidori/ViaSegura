@@ -7,7 +7,7 @@ public record H3CoordinatesDTO(
         String h3Cell,
         BigDecimal latitude,
         BigDecimal longitude,
-        String bairro,
+        String neighborhood,
         LocalDateTime createdAt
 ) {
 }

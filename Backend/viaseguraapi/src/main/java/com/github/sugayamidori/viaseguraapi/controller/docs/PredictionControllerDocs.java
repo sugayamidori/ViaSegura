@@ -37,10 +37,10 @@ public interface PredictionControllerDocs {
             String weekStart,
             @RequestParam(value = "predictedAccidents", required = false)
             BigDecimal predictedAccidents,
-            @RequestParam(value = "pagina", defaultValue = "0")
-            Integer pagina,
-            @RequestParam(value = "tamanhoPagina", defaultValue = "20")
-            Integer tamanhoPagina
+            @RequestParam(value = "page", defaultValue = "0")
+            Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "20")
+            Integer pageSize
 
     );
 }

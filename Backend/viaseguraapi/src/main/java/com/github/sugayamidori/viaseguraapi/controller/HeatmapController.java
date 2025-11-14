@@ -34,19 +34,19 @@ public class HeatmapController implements HeatmapControllerDocs {
             Integer year,
             @RequestParam(value = "month", required = false)
             Integer month,
-            @RequestParam(value = "numSinistros", required = false)
-            BigDecimal numSinistros,
-            @RequestParam(value = "pagina", defaultValue = "0")
-            Integer pagina,
-            @RequestParam(value = "tamanhoPagina", defaultValue = "20")
-            Integer tamanhoPagina
+            @RequestParam(value = "numCasualties", required = false)
+            BigDecimal numCasualties,
+            @RequestParam(value = "page", defaultValue = "0")
+            Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "20")
+            Integer pageSize
 
     ) {
-        Page<Heatmap> paginaResultado = service.search(h3Cell, year, month, numSinistros, pagina, tamanhoPagina);
+        Page<Heatmap> resultPage = service.search(h3Cell, year, month, numCasualties, page, pageSize);
 
-        Page<HeatmapDTO> resultado = paginaResultado.map(mapper::toDTO);
+        Page<HeatmapDTO> result = resultPage.map(mapper::toDTO);
 
-        return ResponseEntity.ok(resultado);
+        return ResponseEntity.ok(result);
     }
 
 }

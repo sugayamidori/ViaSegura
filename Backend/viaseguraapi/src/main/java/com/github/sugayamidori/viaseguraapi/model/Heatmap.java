@@ -31,7 +31,7 @@ public class Heatmap implements Serializable {
     private Integer month;
 
     @Column(name = "num_sinistros", precision = 10, scale = 2)
-    private BigDecimal numSinistros;
+    private BigDecimal numCasualties;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
