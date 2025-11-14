@@ -65,10 +65,11 @@ services:
       - ./scripts:/app
     networks:
       - viasegura-network
-    command: tail -f /dev/null  # Mantém container rodando
+    entrypoint: [ "/bin/bash", "/app/entrypoint.sh" ]
     depends_on:
       viaseguradb:
         condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   postgres_data:
