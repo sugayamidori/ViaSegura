@@ -8,13 +8,11 @@ import com.github.sugayamidori.viaseguraapi.controller.mappers.HeatmapMapper;
 import com.github.sugayamidori.viaseguraapi.model.H3Coordinates;
 import com.github.sugayamidori.viaseguraapi.model.Heatmap;
 import com.github.sugayamidori.viaseguraapi.repository.HeatmapRepository;
-import com.github.sugayamidori.viaseguraapi.service.H3CoordinatesService;
-import com.github.sugayamidori.viaseguraapi.service.HeatmapService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -125,7 +123,7 @@ class HeatmapServiceTest {
                 "898180208d4aaaa", List.of(h3Coordinates2)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -150,7 +148,7 @@ class HeatmapServiceTest {
         assertEquals(1, result.getContent().get(0).coordinates().size());
         assertEquals(1, result.getContent().get(1).coordinates().size());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
         verify(h3CoordinatesService).findByH3CellsToHeatmap(anyList());
         verify(mapper, times(2)).toDTO(any(Heatmap.class));
         verify(h3CoordinatesMapper, times(2)).toDTO(anyList());
@@ -159,7 +157,7 @@ class HeatmapServiceTest {
     @Test
     void searchWithCoordinates_shouldReturnEmptyPage_whenNoHeatmapsFound() {
         Page<Heatmap> emptyPage = Page.empty(PageRequest.of(0, 10));
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(emptyPage);
 
         Page<HeatmapWithCoordinatesDTO> result = service.searchWithCoordinates(
@@ -171,7 +169,7 @@ class HeatmapServiceTest {
         assertEquals(0, result.getTotalElements());
         assertEquals(0, result.getContent().size());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
         verify(h3CoordinatesService, never()).findByH3CellsToHeatmap(anyList());
         verify(mapper, never()).toDTO(any(Heatmap.class));
         verify(h3CoordinatesMapper, never()).toDTO(anyList());
@@ -182,7 +180,7 @@ class HeatmapServiceTest {
         Page<Heatmap> heatmapPage = new PageImpl<>(List.of(heatmap1));
         Map<String, List<H3Coordinates>> emptyCoordinatesMap = Map.of();
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(emptyCoordinatesMap);
@@ -199,7 +197,7 @@ class HeatmapServiceTest {
         assertEquals(heatmapDTO1, result.getContent().getFirst().heatmap());
         assertTrue(result.getContent().getFirst().coordinates().isEmpty());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
         verify(h3CoordinatesService).findByH3CellsToHeatmap(anyList());
         verify(mapper).toDTO(heatmap1);
         verify(h3CoordinatesMapper).toDTO(Collections.emptyList());
@@ -213,7 +211,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -229,7 +227,7 @@ class HeatmapServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(h3Cell, result.getContent().getFirst().heatmap().h3Cell());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
     }
 
     @Test
@@ -240,7 +238,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -256,7 +254,7 @@ class HeatmapServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(year, result.getContent().getFirst().heatmap().year());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
     }
 
     @Test
@@ -267,7 +265,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -283,7 +281,7 @@ class HeatmapServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(month, result.getContent().getFirst().heatmap().month());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
     }
 
     @Test
@@ -294,7 +292,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -310,7 +308,7 @@ class HeatmapServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(numCasualties, result.getContent().getFirst().heatmap().numCasualties());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
     }
 
     @Test
@@ -324,7 +322,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -344,7 +342,7 @@ class HeatmapServiceTest {
         assertEquals(month, resultHeatmap.month());
         assertEquals(numCasualties, resultHeatmap.numCasualties());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
     }
 
     @Test
@@ -358,7 +356,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -376,7 +374,7 @@ class HeatmapServiceTest {
         assertEquals(10, result.getTotalElements());
 
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
-        verify(repository).findAll(any(Specification.class), pageableCaptor.capture());
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), pageableCaptor.capture());
         assertEquals(1, pageableCaptor.getValue().getPageNumber());
         assertEquals(5, pageableCaptor.getValue().getPageSize());
     }
@@ -399,7 +397,7 @@ class HeatmapServiceTest {
                 h3Coordinates3.getLatitude(), h3Coordinates3.getLongitude(),
                 h3Coordinates3.getNeighborhood(), h3Coordinates3.getCreatedAt());
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -429,7 +427,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -444,12 +442,14 @@ class HeatmapServiceTest {
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
 
-        ArgumentCaptor<List<String>> h3CellsCaptor = ArgumentCaptor.forClass(List.class);
+        @SuppressWarnings("unchecked")
+        ArgumentCaptor<List<String>> h3CellsCaptor =
+                (ArgumentCaptor<List<String>>) (ArgumentCaptor<?>) ArgumentCaptor.forClass(List.class);
         verify(h3CoordinatesService).findByH3CellsToHeatmap(h3CellsCaptor.capture());
 
         List<String> capturedH3Cells = h3CellsCaptor.getValue();
         assertEquals(1, capturedH3Cells.size());
-        assertEquals("898180208d3ffff", capturedH3Cells.get(0));
+        assertEquals("898180208d3ffff", capturedH3Cells.getFirst());
     }
 
     @Test
@@ -459,7 +459,7 @@ class HeatmapServiceTest {
                 "898180208d3ffff", List.of(h3Coordinates1)
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class)))
                 .thenReturn(heatmapPage);
         when(h3CoordinatesService.findByH3CellsToHeatmap(anyList()))
                 .thenReturn(coordinatesMap);
@@ -474,6 +474,6 @@ class HeatmapServiceTest {
         assertNotNull(result);
         assertEquals(1, result.getContent().size());
 
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Heatmap>>any(), any(Pageable.class));
     }
 }

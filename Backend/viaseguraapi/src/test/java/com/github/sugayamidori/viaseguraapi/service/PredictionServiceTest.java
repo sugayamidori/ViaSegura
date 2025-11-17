@@ -2,11 +2,11 @@ package com.github.sugayamidori.viaseguraapi.service;
 
 import com.github.sugayamidori.viaseguraapi.model.Prediction;
 import com.github.sugayamidori.viaseguraapi.repository.PredictionRepository;
-import com.github.sugayamidori.viaseguraapi.service.PredictionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -62,7 +62,7 @@ class PredictionServiceTest {
 
         Page<Prediction> expectedPage = new PageImpl<>(List.of(prediction1, prediction2));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<Prediction> result =
@@ -70,7 +70,7 @@ class PredictionServiceTest {
 
         assertEquals(2, result.getContent().size());
         assertEquals(2, result.getTotalElements());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class));
     }
 
     @Test
@@ -78,7 +78,7 @@ class PredictionServiceTest {
         String h3Cell = "898180208d3ffff";
         Page<Prediction> expectedPage = new PageImpl<>(List.of(prediction1));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<Prediction> result =
@@ -87,7 +87,7 @@ class PredictionServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalElements());
         assertEquals(h3Cell, result.getContent().getFirst().getH3Cell());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class));
     }
 
     @Test
@@ -95,7 +95,7 @@ class PredictionServiceTest {
         Date weekStart = new Date();
         Page<Prediction> expectedPage = new PageImpl<>(List.of(prediction1, prediction2));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<Prediction> result =
@@ -105,7 +105,7 @@ class PredictionServiceTest {
         assertEquals(2, result.getTotalElements());
         assertEquals(weekStart.toString(),
                 result.getContent().getFirst().getWeekStart().toString());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class));
     }
 
     @Test
@@ -113,7 +113,7 @@ class PredictionServiceTest {
         BigDecimal predicted = BigDecimal.valueOf(1.2305097036787915);
         Page<Prediction> expectedPage = new PageImpl<>(List.of(prediction2));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<Prediction> result =
@@ -122,7 +122,7 @@ class PredictionServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalElements());
         assertEquals(predicted, result.getContent().getFirst().getPredictedAccidents());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class));
     }
 
     @Test
@@ -131,7 +131,7 @@ class PredictionServiceTest {
         Date weekStart = new Date();
         BigDecimal predicted = BigDecimal.valueOf(0.0009153104641940453);
         Page<Prediction> expectedPage = new PageImpl<>(List.of(prediction1));
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<Prediction> result =
@@ -142,7 +142,7 @@ class PredictionServiceTest {
         assertEquals(h3Cell, result.getContent().getFirst().getH3Cell());
         assertEquals(weekStart.toString(), result.getContent().getFirst().getWeekStart().toString());
         assertEquals(predicted, result.getContent().getFirst().getPredictedAccidents());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class));
     }
 
     @Test
@@ -154,7 +154,7 @@ class PredictionServiceTest {
                 10
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<Prediction> result =
@@ -163,7 +163,7 @@ class PredictionServiceTest {
         assertEquals(1, result.getNumber()); // página atual
         assertEquals(5, result.getSize());   // tamanho da página
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
-        verify(repository).findAll(any(Specification.class), pageableCaptor.capture());
+        verify(repository).findAll(ArgumentMatchers.<Specification<Prediction>>any(), pageableCaptor.capture());
         assertEquals(1, pageableCaptor.getValue().getPageNumber());
         assertEquals(5, pageableCaptor.getValue().getPageSize());
     }
@@ -172,7 +172,7 @@ class PredictionServiceTest {
     void search_shouldReturnEmptyPage_whenNoResultsFound() {
         Page<Prediction> emptyPage = new PageImpl<>(List.of());
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class)))
                 .thenReturn(emptyPage);
 
         Page<Prediction> result =
@@ -180,6 +180,6 @@ class PredictionServiceTest {
 
         assertTrue(result.getContent().isEmpty());
         assertEquals(0, result.getTotalElements());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<Prediction>>any(), any(Pageable.class));
     }
 }

@@ -2,11 +2,11 @@ package com.github.sugayamidori.viaseguraapi.service;
 
 import com.github.sugayamidori.viaseguraapi.model.H3Coordinates;
 import com.github.sugayamidori.viaseguraapi.repository.H3CoordinatesRepository;
-import com.github.sugayamidori.viaseguraapi.service.H3CoordinatesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -66,14 +66,14 @@ class H3CoordinatesServiceTest {
 
         Page<H3Coordinates> expectedPage = new PageImpl<>(List.of(h3Coordinates1, h3Coordinates2));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<H3Coordinates> result = service.search("", null, null, null, 0, 10);
 
         assertEquals(2, result.getContent().size());
         assertEquals(2, result.getTotalElements());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class));
     }
 
     @Test
@@ -81,7 +81,7 @@ class H3CoordinatesServiceTest {
         String h3Cell = "898180208d3ffff";
         Page<H3Coordinates> expectedPage = new PageImpl<>(List.of(h3Coordinates1));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<H3Coordinates> result = service.search(h3Cell, null, null, null, 0, 10);
@@ -89,7 +89,7 @@ class H3CoordinatesServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalElements());
         assertEquals(h3Cell, result.getContent().getFirst().getH3Cell());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class));
     }
 
     @Test
@@ -97,7 +97,7 @@ class H3CoordinatesServiceTest {
         BigDecimal latitude = BigDecimal.valueOf(-35.2357829);
         Page<H3Coordinates> expectedPage = new PageImpl<>(List.of(h3Coordinates1));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<H3Coordinates> result = service.search("", latitude, null, null, 0, 10);
@@ -105,7 +105,7 @@ class H3CoordinatesServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalElements());
         assertEquals(latitude, result.getContent().getFirst().getLatitude());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class));
     }
 
     @Test
@@ -113,7 +113,7 @@ class H3CoordinatesServiceTest {
         BigDecimal longitude = BigDecimal.valueOf(-8.3586413);
         Page<H3Coordinates> expectedPage = new PageImpl<>(List.of(h3Coordinates1));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<H3Coordinates> result = service.search("", null, longitude, null, 0, 10);
@@ -121,7 +121,7 @@ class H3CoordinatesServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalElements());
         assertEquals(longitude, result.getContent().getFirst().getLongitude());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class));
     }
 
     @Test
@@ -129,7 +129,7 @@ class H3CoordinatesServiceTest {
         String neighborhood = "nova descoberta";
         Page<H3Coordinates> expectedPage = new PageImpl<>(List.of(h3Coordinates1));
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<H3Coordinates> result = service.search("", null, null, neighborhood, 0, 10);
@@ -137,7 +137,7 @@ class H3CoordinatesServiceTest {
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalElements());
         assertEquals(neighborhood, result.getContent().getFirst().getNeighborhood());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class));
     }
 
     @Test
@@ -147,7 +147,7 @@ class H3CoordinatesServiceTest {
         BigDecimal longitude = BigDecimal.valueOf(-8.3586413);
         String neighborhood = "nova descoberta";
         Page<H3Coordinates> expectedPage = new PageImpl<>(List.of(h3Coordinates1));
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<H3Coordinates> result = service.search(h3Cell, latitude, longitude, neighborhood, 0, 10);
@@ -158,7 +158,7 @@ class H3CoordinatesServiceTest {
         assertEquals(latitude, result.getContent().getFirst().getLatitude());
         assertEquals(longitude, result.getContent().getFirst().getLongitude());
         assertEquals(neighborhood, result.getContent().getFirst().getNeighborhood());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class));
     }
 
     @Test
@@ -170,7 +170,7 @@ class H3CoordinatesServiceTest {
                 10
         );
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(expectedPage);
 
         Page<H3Coordinates> result = service.search("", null, null, null, 1, 5);
@@ -178,7 +178,7 @@ class H3CoordinatesServiceTest {
         assertEquals(1, result.getNumber()); // página atual
         assertEquals(5, result.getSize());   // tamanho da página
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
-        verify(repository).findAll(any(Specification.class), pageableCaptor.capture());
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), pageableCaptor.capture());
         assertEquals(1, pageableCaptor.getValue().getPageNumber());
         assertEquals(5, pageableCaptor.getValue().getPageSize());
     }
@@ -187,14 +187,14 @@ class H3CoordinatesServiceTest {
     void search_shouldReturnEmptyPage_whenNoResultsFound() {
         Page<H3Coordinates> emptyPage = new PageImpl<>(List.of());
 
-        when(repository.findAll(any(Specification.class), any(Pageable.class)))
+        when(repository.findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class)))
                 .thenReturn(emptyPage);
 
         Page<H3Coordinates> result = service.search("nonexistent", null, null, null, 0, 10);
 
         assertTrue(result.getContent().isEmpty());
         assertEquals(0, result.getTotalElements());
-        verify(repository).findAll(any(Specification.class), any(Pageable.class));
+        verify(repository).findAll(ArgumentMatchers.<Specification<H3Coordinates>>any(), any(Pageable.class));
     }
 
     // ========== TESTES DO MÉTODO FINDBYH3CELLSTOHEATMAP ==========
